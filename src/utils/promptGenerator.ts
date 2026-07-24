@@ -354,21 +354,25 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     gLower.includes("j-pop");
   const antiPopTag = !isPop ? ", no pop, no hooks, raw mix" : "";
 
-  // 2. Era Mapping automatically
+  const producerAnchorStr = req.producerAnchor || "";
+  const audioQualityStr = req.audioQuality || "24-bit 192kHz, wide stereo panorama";
+
+  // 2. Era Mapping automatically (or override if producerAnchor implies an era, but we just prepend producerAnchor)
   const era = getEraForGenre(genreStr);
 
   // 2. Universal Prompt Formula Order:
-  // [era/decade] + [genre] + [subgenres] + [vocal description] + [moods] + [instruments] + [production metadata]
-  const shortParts = [era, genreStr, subGenresStr, vocalTypeStr, moodStr, instrumentsStr].filter(
+  // [producer anchor] + [era/decade] + [genre] + [subgenres] + [vocal description] + [moods] + [instruments] + [production metadata]
+  const shortParts = [producerAnchorStr, era, genreStr, subGenresStr, vocalTypeStr, moodStr, instrumentsStr].filter(
     Boolean
   );
   const shortStyleRaw = `${shortParts.join(", ")}${antiPopTag}`;
   const stylePromptShort =
     shortStyleRaw.length > 120 ? shortStyleRaw.substring(0, 117) + "..." : shortStyleRaw;
 
-  // 3. Quality Metadata: Always append '24-bit 192kHz, wide stereo panorama' to expanded style
+  // 3. Quality Metadata
   const featuredInstruments = instrumentsStr ? `featured instruments: ${instrumentsStr}` : "";
   const expandedParts = [
+    producerAnchorStr,
     era,
     genreStr,
     subGenresStr,
@@ -376,7 +380,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     tempoStr,
     moodStr,
     featuredInstruments,
-    "24-bit 192kHz, wide stereo panorama",
+    audioQualityStr,
   ].filter(Boolean);
   const stylePromptExpanded = `${expandedParts.join(", ")}${antiPopTag}`;
 

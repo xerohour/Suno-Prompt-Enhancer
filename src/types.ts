@@ -11,6 +11,8 @@ export interface SunoPromptRequest {
   instrumentation: string[];
   structurePreferences: string[];
   customInstructions?: string;
+  producerAnchor?: string;
+  audioQuality?: string;
 }
 
 export interface SunoPromptResult {

@@ -53,6 +53,8 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
     "[Outro]",
   ]);
   const [customInstructions, setCustomInstructions] = useState("");
+  const [producerAnchor, setProducerAnchor] = useState("");
+  const [audioQuality, setAudioQuality] = useState("24-bit 192kHz, wide stereo panorama");
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const availableSubGenres = SUB_GENRES_MAP[genre] || [];
@@ -68,6 +70,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
     setSelectedSubGenres([]);
     setVocalType(randomVocal);
     setMood(randomMood);
+    setProducerAnchor("");
   };
 
   const toggleSubGenre = (sg: string) => {
@@ -101,6 +104,8 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
       instrumentation: selectedInstruments,
       structurePreferences,
       customInstructions,
+      producerAnchor: producerAnchor.trim() || undefined,
+      audioQuality,
     });
   };
 
@@ -341,6 +346,34 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
                 placeholder="e.g. Include a catchy 2-line rhyming refrain in Spanish; make the chorus explosive..."
                 className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
               />
+            </div>
+            
+            {/* SUNO Bible: Producer Anchors & Quality Metadata */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1">
+                  Producer Anchor / Era Specificity:
+                </label>
+                <input
+                  type="text"
+                  value={producerAnchor}
+                  onChange={(e) => setProducerAnchor(e.target.value)}
+                  placeholder="e.g. Produced by Danger Mouse, 1970s Abbey Road..."
+                  className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1">
+                  Audio Quality Metadata:
+                </label>
+                <input
+                  type="text"
+                  value={audioQuality}
+                  onChange={(e) => setAudioQuality(e.target.value)}
+                  placeholder="e.g. Tape saturation, 24-bit 192kHz..."
+                  className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                />
+              </div>
             </div>
           </div>
         )}
