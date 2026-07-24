@@ -38,10 +38,21 @@ export default function App() {
     }
   }, [savedList]);
 
-  // Handle Prompt Enhancement API Call
+  // Handle Prompt Enhancement
   const handleEnhancePrompt = async (reqData: SunoPromptRequest) => {
     setIsLoading(true);
     setErrorMsg(null);
+
+    // If hosted on GitHub Pages or static host without backend server, run client-side generator directly
+    if (window.location.hostname.includes("github.io") || window.location.protocol === "file:") {
+      setTimeout(() => {
+        const fallbackResult = generateClientSidePrompt(reqData);
+        setCurrentResult(fallbackResult);
+        window.scrollTo({ top: 400, behavior: "smooth" });
+        setIsLoading(false);
+      }, 400);
+      return;
+    }
 
     try {
       const response = await fetch("/api/enhance-prompt", {
@@ -63,12 +74,10 @@ export default function App() {
           return;
         }
       }
-      // Static host fallback (e.g. GitHub Pages)
       const fallbackResult = generateClientSidePrompt(reqData);
       setCurrentResult(fallbackResult);
       window.scrollTo({ top: 400, behavior: "smooth" });
-    } catch (err: any) {
-      console.warn("API unavailable, generating prompt client-side:", err);
+    } catch {
       const fallbackResult = generateClientSidePrompt(reqData);
       setCurrentResult(fallbackResult);
       window.scrollTo({ top: 400, behavior: "smooth" });
