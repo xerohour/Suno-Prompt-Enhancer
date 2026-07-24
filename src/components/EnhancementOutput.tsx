@@ -264,15 +264,16 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
             </h3>
           </div>
           <div className="flex items-center gap-2">
-            <span
-              className={`text-[11px] px-2.5 py-0.5 rounded-full font-mono font-semibold ${
-                isShortOptimal
-                  ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                  : "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-              }`}
-            >
-              {shortLength} chars {isShortOptimal ? "(Optimal ≤ 120)" : "(Extended)"}
-            </span>
+            {!isShortOptimal && (
+              <span className="text-[10px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-full font-bold">
+                ⚠️ Over 120 chars (might truncate)
+              </span>
+            )}
+            {result.stylePromptExpanded.includes("no pop, no hooks") && (
+              <span className="text-[10px] text-fuchsia-400 bg-fuchsia-400/10 border border-fuchsia-400/20 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                <Activity className="w-3 h-3" /> Anti-Pop Gravity Well Active
+              </span>
+            )}
             <button
               onClick={() => handleCopy(result.stylePromptShort, setCopiedStyleShort)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs transition-all shadow-md shadow-cyan-500/20"
@@ -368,28 +369,57 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
         </div>
 
         {/* Metatag Quick Inserter Bar */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-          <span className="text-slate-400 font-bold text-[11px] whitespace-nowrap uppercase tracking-wider">Insert Tag:</span>
-          {[
-            "[Intro]",
-            "[Verse 1]",
-            "[Pre-Chorus]",
-            "[Chorus]",
-            "[Post-Chorus]",
-            "[Bridge]",
-            "[Guitar Solo]",
-            "[Drop]",
-            "[Outro]",
-            "[Fade Out]",
-          ].map((tag) => (
-            <button
-              key={tag}
-              onClick={() => handleInsertMetatag(tag)}
-              className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-cyan-300 font-mono text-[11px] hover:bg-white/10 whitespace-nowrap font-semibold"
-            >
-              + {tag}
-            </button>
-          ))}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+            <span className="text-slate-400 font-bold text-[11px] whitespace-nowrap uppercase tracking-wider">Structure:</span>
+            {[
+              "[Intro]",
+              "[Verse 1]",
+              "[Pre-Chorus]",
+              "[Chorus]",
+              "[Bridge]",
+              "[Interlude]",
+              "[Break]",
+              "[Build]",
+              "[Solo]",
+              "[Outro]",
+              "[Fade to End]",
+              "[End]"
+            ].map((tag) => (
+              <button
+                key={tag}
+                onClick={() => handleInsertMetatag(tag)}
+                className="px-2.5 py-1 rounded-xl bg-white/5 border border-white/10 text-cyan-300 font-mono text-[11px] hover:bg-white/10 whitespace-nowrap font-semibold"
+              >
+                + {tag}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+            <span className="text-slate-400 font-bold text-[11px] whitespace-nowrap uppercase tracking-wider">Vocals & FX:</span>
+            {[
+              "[Spoken Word Narration]",
+              "[Ethereal Female Whisper]",
+              "[Ensemble Chorus]",
+              ". . . ! . . (Rhythm Map)",
+              "... (Slow Pace)",
+              "(Call & Response)"
+            ].map((tag) => (
+              <button
+                key={tag}
+                onClick={() => {
+                  if (tag === "(Call & Response)") handleInsertMetatag("(Yeah!)");
+                  else if (tag === "... (Slow Pace)") handleInsertMetatag("...");
+                  else if (tag === ". . . ! . . (Rhythm Map)") handleInsertMetatag(". . . ! . .");
+                  else handleInsertMetatag(tag);
+                }}
+                className="px-2.5 py-1 rounded-xl bg-fuchsia-500/10 border border-fuchsia-500/20 text-fuchsia-300 font-mono text-[11px] hover:bg-fuchsia-500/20 whitespace-nowrap font-semibold"
+              >
+                + {tag}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Lyrics Content Display or Textarea */}
