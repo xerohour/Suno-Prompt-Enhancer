@@ -3,8 +3,8 @@ import { Sparkles, Music2, BookOpen, Layers, Bookmark, Wand2, Disc } from "lucid
 import { SunoVersion } from "../types";
 
 interface HeaderProps {
-  activeTab: "enhancer" | "hook" | "mixer" | "metatags" | "presets" | "saved";
-  setActiveTab: (tab: "enhancer" | "hook" | "mixer" | "metatags" | "presets" | "saved") => void;
+  activeTab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved";
+  setActiveTab: (tab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved") => void;
   sunoVersion: SunoVersion;
   setSunoVersion: (v: SunoVersion) => void;
   savedCount: number;
@@ -44,6 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
         <nav className="flex items-center gap-1 bg-white/5 backdrop-blur-xl p-1.5 rounded-2xl border border-white/10 overflow-x-auto max-w-full">
           {[
             { id: "enhancer", label: "Prompt Enhancer", icon: Sparkles },
+            { id: "artists", label: "Artist Replicas", icon: Music2 },
             { id: "hook", label: "Hook Lab", icon: Wand2 },
             { id: "mixer", label: "Genre Blender", icon: Disc },
             { id: "metatags", label: "Metatags Cheat Sheet", icon: BookOpen },

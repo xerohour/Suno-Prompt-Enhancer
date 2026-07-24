@@ -65,3 +65,14 @@ export interface PresetPrompt {
   sampleHook: string;
   tags: string[];
 }
+
+export interface ArtistReplica {
+  id: string;
+  name: string;
+  era: string;
+  producer: string;
+  genres: string[];
+  vocalType: string;
+  prompt: string;
+  description: string;
+}

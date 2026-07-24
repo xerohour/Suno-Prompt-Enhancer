@@ -7,13 +7,14 @@ import { GenreMixerModal } from "./components/GenreMixerModal";
 import { MetatagsGuide } from "./components/MetatagsGuide";
 import { PresetLibrary } from "./components/PresetLibrary";
 import { SavedPrompts } from "./components/SavedPrompts";
+import { ArtistReplicas } from "./components/ArtistReplicas";
 import { SunoPromptRequest, SunoPromptResult, SunoVersion, PresetPrompt } from "./types";
 import { generateClientSidePrompt } from "./utils/promptGenerator";
 import { Sparkles, ArrowUp } from "lucide-react";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<
-    "enhancer" | "hook" | "mixer" | "metatags" | "presets" | "saved"
+    "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved"
   >("enhancer");
   const [sunoVersion, setSunoVersion] = useState<SunoVersion>("v3.5");
   const [currentResult, setCurrentResult] = useState<SunoPromptResult | null>(null);
@@ -168,7 +169,27 @@ export default function App() {
           </div>
         )}
 
-        {/* Tab 2: Hook Generator Lab */}
+        {/* Tab 2: Artist Replicas (Suno Bible) */}
+        {activeTab === "artists" && (
+          <ArtistReplicas
+            onUseArtistPrompt={(promptStr, genreStr) => {
+              setActiveTab("enhancer");
+              handleEnhancePrompt({
+                topic: `Song in style of ${promptStr.slice(0, 40)}`,
+                genre: genreStr || "Rock",
+                subGenres: [],
+                vocalType: "Male Lead",
+                tempo: "120 BPM",
+                mood: "Energetic",
+                sunoVersion,
+                instrumentation: ["Guitar", "Drums"],
+                structurePreferences: ["[Intro]", "[Verse]", "[Chorus]", "[Outro]"],
+              });
+            }}
+          />
+        )}
+
+        {/* Tab 3: Hook Generator Lab */}
         {activeTab === "hook" && <HookGeneratorModal />}
 
         {/* Tab 3: Genre Blender */}
