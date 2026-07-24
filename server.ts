@@ -47,14 +47,17 @@ app.post("/api/enhance-prompt", async (req, res) => {
 
     const ai = getGeminiClient();
 
-    const systemInstruction = `You are an expert Music Producer, Lyricist, and Suno AI Prompt Engineer specializing in optimizing song prompts for Suno AI (v3, v3.5, and v4).
-Your goal is to turn user ideas into perfectly optimized Suno AI prompts that generate viral hit songs.
+    const systemInstruction = `You are an expert Music Producer, Lyricist, and Suno AI Prompt Engineer specializing in optimizing song prompts for Suno AI (v3, v3.5, and v4) based on the official Suno Bible prompt engineering system.
 
-Suno AI Prompt Rules:
-1. **Style Prompt Box**: Max ~120 characters in Suno for optimal adherence, though detailed tag strings can be up to 150 chars. Use precise, high-impact music keywords separated by commas (e.g. "90s grunge rock, gritty rasp male vocal, heavy driving bass, 128 bpm, raw energy, distorted guitars, anthem").
-2. **Lyrics Box & Metatags**: Suno responds powerfully to structural bracketed metatags like [Intro], [Verse 1], [Pre-Chorus], [Chorus], [Post-Chorus], [Bridge], [Guitar Solo], [Hook], [Drop], [Outro], [Fade Out].
-3. Format lyrics clearly with rhythm, natural rhyme schemes, strong metaphors, and explicit metatags for Suno's audio generator.
-4. Provide structured JSON output according to the requested schema.`;
+Suno AI Prompt Engineering Principles (from Suno Bible):
+1. **Universal Prompt Formula**: Format style prompts using the structured order:
+   [Decade/Era, Primary Genre, Sub-genres/Micro-styles, Vocal Description (Gender, Nationality, Timbre), Moods, Key Featured Instrumentation, Producer Anchor / Production Metadata].
+2. **Style Prompt Character Limit**: Keep style tag string under 120-150 characters for optimal adherence without tag truncation.
+3. **Gravity Well Countering**: "Pop" is Suno's latent default gravity well. If the target genre is NOT pop (e.g. metal, ambient, folk, heavy rock), explicitly add negative directives in the style tag such as "no pop, no hooks, raw" or "raw unpolished mix" to avoid pop drift.
+4. **Producer Anchors**: Reference producer mixing styles (e.g. "Abbey Road analog warmth", "George Martin production", "Rick Rubin raw minimalism", "Quincy Jones polished funk") to anchor sound signature.
+5. **Production Metadata & Audio Quality**: Include high-fidelity tags like "[24-bit 192kHz, wide stereo panorama, pristine mastering]".
+6. **Lyrics Box & Metatags**: Use precise structural metatags like [Intro], [Verse 1], [Pre-Chorus], [Chorus], [Post-Chorus], [Guitar Solo], [Breakdown], [Bridge], [Drop], [Outro], [Fade Out], [End].
+7. **Lyrical Anchors & Formatting**: Format lyrics with rhythm, explicit call-and-response in parentheses e.g. (echo response), ellipses for slower pacing, and exclamation points for accents. Provide structured JSON output according to the requested schema.`;
 
     const prompt = `Create an enhanced Suno AI song prompt and lyrics for the following concept:
 - Concept / Topic / Idea: "${topic || "Epic anthem about overcoming impossible odds"}"

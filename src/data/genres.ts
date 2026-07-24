@@ -99,3 +99,21 @@ export const RANDOM_IDEAS = [
   "A high-energy K-Pop banger about glowing under starlight",
   "An outlaw country rock song about a dusty highway ranger seeking redemption",
 ];
+
+export const PRODUCER_ANCHORS = [
+  { name: "George Martin", description: "Polished, baroque pop, innovative orchestral layering" },
+  { name: "Brian Eno", description: "Experimental, ambient textures, generative soundscapes" },
+  { name: "Rick Rubin", description: "Raw, minimal, stripped-back punchy intimacy" },
+  { name: "Quincy Jones", description: "Groove-driven, pristine pop/funk mix, brass stabs" },
+  { name: "Phil Spector", description: "Wall of sound, mono echo, lush reverb density" },
+  { name: "Timbaland", description: "Syncopated beat chops, unusual vocal sampling, deep low-end" },
+  { name: "Jack Antonoff", description: "Modern Indie synth-pop, vintage warm analog synths" },
+];
+
+export const SUNO_BIBLE_RULES = [
+  { title: "Avoid Gravity Wells", description: "Pop is Suno's default latent state. For non-pop genres, add 'no pop, no hooks, raw' to prevent style drift." },
+  { title: "Universal Formula", description: "Order: [Decade, Genre, Subgenres, Vocal Profile, Moods, Instruments, Producer Anchor, Quality Metadata]." },
+  { title: "Producer Anchors", description: "Tag iconic producers (e.g. 'Abbey Road 60s warmth', 'Rick Rubin raw mix') to lock signature acoustic physics." },
+  { title: "Quality Metadata", description: "Append '[24-bit 192kHz, wide stereo, pristine audio]' for cleaner generation dynamics." },
+  { title: "Temporal Optimization", description: "Peak generation fidelity occurs during low server load windows (3-4 AM local time)." },
+];

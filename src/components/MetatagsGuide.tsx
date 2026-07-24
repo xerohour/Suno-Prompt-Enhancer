@@ -36,10 +36,10 @@ export const MetatagsGuide: React.FC = () => {
         <div>
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-cyan-400" />
-            Suno Metatags Cheat Sheet & Directory
+            Suno Metatags & Prompt Engineering Bible
           </h2>
           <p className="text-xs text-slate-300 mt-1">
-            Master Suno AI's bracketed structure tags to control song arrangements, vocal styles, and solos
+            Master Suno AI's bracketed structure tags, sacred prompt strategies, and gravity-well counters based on the Suno Bible system
           </p>
         </div>
 
