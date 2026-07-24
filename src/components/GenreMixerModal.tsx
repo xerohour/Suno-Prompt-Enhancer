@@ -29,12 +29,35 @@ export const GenreMixerModal: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ genres: selectedGenres }),
       });
-      const data = await res.json();
-      if (data.success && data.fusion) {
-        setFusion(data.fusion);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.fusion) {
+          setFusion(data.fusion);
+          return;
+        }
       }
+      // Fallback for static host
+      const fusionName = selectedGenres.join(" - ") + " Fusion";
+      const stylePrompt = `${selectedGenres.join(", ")}, hybrid rhythm, dynamic sonic contrast, high-energy arrangement, 24-bit 192kHz, no pop, raw mix`;
+      setFusion({
+        fusionName,
+        stylePrompt,
+        description: `Cohesive blend of ${selectedGenres.join(" and ")} leveraging Suno Bible contrast-stacking strategies.`,
+        recommendedInstruments: ["Analog Synthesizer", "Electric Guitar", "Punchy Drums"],
+        vocalSuggestions: "Versatile lead with expressive range",
+        exampleBpm: "125 BPM",
+      });
     } catch (err) {
-      console.error("Mix genres error:", err);
+      const fusionName = selectedGenres.join(" - ") + " Fusion";
+      const stylePrompt = `${selectedGenres.join(", ")}, hybrid rhythm, dynamic sonic contrast, high-energy arrangement, 24-bit 192kHz, no pop, raw mix`;
+      setFusion({
+        fusionName,
+        stylePrompt,
+        description: `Cohesive blend of ${selectedGenres.join(" and ")} leveraging Suno Bible contrast-stacking strategies.`,
+        recommendedInstruments: ["Analog Synthesizer", "Electric Guitar", "Punchy Drums"],
+        vocalSuggestions: "Versatile lead with expressive range",
+        exampleBpm: "125 BPM",
+      });
     } finally {
       setIsLoading(false);
     }

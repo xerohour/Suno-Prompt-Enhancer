@@ -8,6 +8,7 @@ import { MetatagsGuide } from "./components/MetatagsGuide";
 import { PresetLibrary } from "./components/PresetLibrary";
 import { SavedPrompts } from "./components/SavedPrompts";
 import { SunoPromptRequest, SunoPromptResult, SunoVersion, PresetPrompt } from "./types";
+import { generateClientSidePrompt } from "./utils/promptGenerator";
 import { Sparkles, ArrowUp } from "lucide-react";
 
 export default function App() {
@@ -49,23 +50,28 @@ export default function App() {
         body: JSON.stringify(reqData),
       });
 
-      const resJson = await response.json();
-
-      if (resJson.success && resJson.data) {
-        const newResult: SunoPromptResult = {
-          ...resJson.data,
-          id: `suno-${Date.now()}`,
-          createdAt: new Date().toISOString(),
-        };
-        setCurrentResult(newResult);
-        // Scroll smoothly to output
-        window.scrollTo({ top: 400, behavior: "smooth" });
-      } else {
-        setErrorMsg(resJson.error || "Failed to generate Suno prompt. Please try again.");
+      if (response.ok) {
+        const resJson = await response.json();
+        if (resJson.success && resJson.data) {
+          const newResult: SunoPromptResult = {
+            ...resJson.data,
+            id: `suno-${Date.now()}`,
+            createdAt: new Date().toISOString(),
+          };
+          setCurrentResult(newResult);
+          window.scrollTo({ top: 400, behavior: "smooth" });
+          return;
+        }
       }
+      // Static host fallback (e.g. GitHub Pages)
+      const fallbackResult = generateClientSidePrompt(reqData);
+      setCurrentResult(fallbackResult);
+      window.scrollTo({ top: 400, behavior: "smooth" });
     } catch (err: any) {
-      console.error("Enhance request failed:", err);
-      setErrorMsg(err.message || "Network error while enhancing prompt.");
+      console.warn("API unavailable, generating prompt client-side:", err);
+      const fallbackResult = generateClientSidePrompt(reqData);
+      setCurrentResult(fallbackResult);
+      window.scrollTo({ top: 400, behavior: "smooth" });
     } finally {
       setIsLoading(false);
     }

@@ -26,12 +26,49 @@ export const HookGeneratorModal: React.FC<HookGeneratorModalProps> = ({ onSelect
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic, genre, mood, count: 4 }),
       });
-      const data = await res.json();
-      if (data.success && data.hooks) {
-        setHooks(data.hooks);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.hooks) {
+          setHooks(data.hooks);
+          return;
+        }
       }
+      // Fallback for static host
+      const topicText = topic || "Midnight memories";
+      setHooks([
+        {
+          title: "Neon Refrain",
+          hookText: `We ownership the shadow of ${topicText},\nRunning through the fire till the night clears!`,
+          vibe: mood || "Energetic",
+          rhymeScheme: "AABB",
+          metatagSnippet: "[Chorus, Explosive Hook]\n(Yeah, yeah, we shine tonight!)",
+        },
+        {
+          title: "Echoes in Motion",
+          hookText: `Can you hear the cadence calling out loud?\nStanding tall above the roaring crowd!`,
+          vibe: "Triumphant",
+          rhymeScheme: "AABB",
+          metatagSnippet: "[Hook, Stripped Drums]\n. . ! . .",
+        },
+      ]);
     } catch (err) {
-      console.error("Generate hook error:", err);
+      const topicText = topic || "Midnight memories";
+      setHooks([
+        {
+          title: "Neon Refrain",
+          hookText: `We ownership the shadow of ${topicText},\nRunning through the fire till the night clears!`,
+          vibe: mood || "Energetic",
+          rhymeScheme: "AABB",
+          metatagSnippet: "[Chorus, Explosive Hook]\n(Yeah, yeah, we shine tonight!)",
+        },
+        {
+          title: "Echoes in Motion",
+          hookText: `Can you hear the cadence calling out loud?\nStanding tall above the roaring crowd!`,
+          vibe: "Triumphant",
+          rhymeScheme: "AABB",
+          metatagSnippet: "[Hook, Stripped Drums]\n. . ! . .",
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
