@@ -367,6 +367,8 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     exclusions,
     useVoiceClone,
     isInstrumental,
+    density,
+    useAnchorRepeat,
   } = req;
 
   const conceptStr = topic.trim() || "Epic journey of transformation and resilience";
@@ -450,11 +452,16 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
       vocalTypeStr,
       tempoStr,
       moodStr,
+      density !== "Auto" ? `${density.toLowerCase()} density` : "",
       featuredInstruments,
       audioQualityStr,
     ].filter(Boolean);
     if (isInstrumental) expandedParts.push("Instrumental");
     stylePromptExpanded = `${expandedParts.join(", ")}${antiPopTag}`;
+    
+    if (useAnchorRepeat) {
+      stylePromptExpanded = `${stylePromptExpanded}, ${genreStr}, ${moodStr}`;
+    }
   }
 
   // 4 & 5. Smarter Genre-Specific Lyrics Generation
@@ -513,6 +520,8 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
       (sunoVersion === "v5" || sunoVersion === "v5.5") ? "v5.5 Tip: You can now clone your own voice or train a custom model with your personal catalog in Suno!" : "",
       useVoiceClone && !isInstrumental ? "Voice Clone Active: Vocal gender/timbre removed from prompt. Only emotional delivery modifiers retained." : "",
       isInstrumental ? "Instrumental Mode: Lyrics act as a 'Director's Libretto' with parenthetical instructions instead of sung words." : "",
+      useAnchorRepeat ? "Anchor-Repeat Strategy: Primary genre and mood are appended to the end of the prompt to reinforce sonic identity." : "",
+      density !== "Auto" ? `Density set to ${density}: Helps prevent muddy mixes or empty arrangements.` : "",
       "Temporal Optimization: Generate during off-peak hours (3:00 AM - 4:30 AM local time) for peak AI performance."
     ].filter(Boolean),
     moodAnalysis: `A ${moodStr.toLowerCase()} ${genreStr} production set in the ${era} era, featuring ${vocalTypeStr.toLowerCase()} delivery and ${instrumentsStr}.`,

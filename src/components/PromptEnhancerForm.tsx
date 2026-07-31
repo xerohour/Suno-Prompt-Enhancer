@@ -60,6 +60,8 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
   const [exclusions, setExclusions] = useState("");
   const [useVoiceClone, setUseVoiceClone] = useState(false);
   const [isInstrumental, setIsInstrumental] = useState(false);
+  const [density, setDensity] = useState<"Sparse" | "Medium" | "Lush" | "Auto">("Auto");
+  const [useAnchorRepeat, setUseAnchorRepeat] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const availableSubGenres = SUB_GENRES_MAP[genre] || [];
@@ -115,6 +117,8 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
       exclusions: exclusions.trim() || undefined,
       useVoiceClone: sunoVersion === "v5.5" ? useVoiceClone : false,
       isInstrumental,
+      density,
+      useAnchorRepeat,
     });
   };
 
@@ -289,14 +293,32 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
         </div>
       </div>
 
-      {/* Instrumentation Chips */}
-      <div>
-        <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
-          Featured Instruments & Acoustic Texture
-        </label>
-        <div className="flex flex-wrap gap-1.5">
-          {INSTRUMENTS.map((inst) => {
-            const active = selectedInstruments.includes(inst);
+      {/* Instrumentation & Density */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <Layers className="w-3.5 h-3.5 text-cyan-400" />
+            Track Density
+          </label>
+          <select
+            value={density}
+            onChange={(e) => setDensity(e.target.value as any)}
+            className="w-full bg-black/30 border border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
+          >
+            <option value="Auto" className="bg-slate-900 text-slate-100">Auto</option>
+            <option value="Sparse" className="bg-slate-900 text-slate-100">Sparse (Minimal, clean)</option>
+            <option value="Medium" className="bg-slate-900 text-slate-100">Medium (Balanced)</option>
+            <option value="Lush" className="bg-slate-900 text-slate-100">Lush (Wall-of-sound, thick)</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+            Featured Instruments
+          </label>
+          <div className="flex flex-wrap gap-1.5">
+            {INSTRUMENTS.map((inst) => {
+              const active = selectedInstruments.includes(inst);
             return (
               <button
                 type="button"
@@ -312,6 +334,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
               </button>
             );
           })}
+        </div>
         </div>
       </div>
 
@@ -427,21 +450,34 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
               </div>
             </div>
 
-            {/* Anti-Gravity Exclusions */}
-            <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1">
-                Force Exclusions (Anti-Gravity Well):
-              </label>
-              <input
-                type="text"
-                value={exclusions}
-                onChange={(e) => setExclusions(e.target.value)}
-                placeholder="e.g. no pop, no polished hooks, no trap beats"
-                className="w-full bg-black/30 border border-red-500/20 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400/50"
-              />
-              <p className="text-[10px] text-slate-400 mt-1.5 ml-1">
-                Use to avoid Suno's default tendencies. If you aren't making a pop song, explicitly exclude pop elements.
-              </p>
+            {/* Anti-Gravity Exclusions & Anchor Repeat */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1">
+                  Force Exclusions (Anti-Gravity Well):
+                </label>
+                <input
+                  type="text"
+                  value={exclusions}
+                  onChange={(e) => setExclusions(e.target.value)}
+                  placeholder="e.g. no pop, no polished hooks, no trap beats"
+                  className="w-full bg-black/30 border border-red-500/20 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400/50"
+                />
+              </div>
+              <div className="flex items-center mt-6">
+                <div className="flex items-center gap-2 bg-black/20 p-3 rounded-xl border border-cyan-500/20 w-full">
+                  <input
+                    type="checkbox"
+                    id="anchorRepeat"
+                    checked={useAnchorRepeat}
+                    onChange={(e) => setUseAnchorRepeat(e.target.checked)}
+                    className="w-4 h-4 accent-cyan-500 rounded"
+                  />
+                  <label htmlFor="anchorRepeat" className="text-xs font-bold text-cyan-300 cursor-pointer">
+                    Use Anchor-Repeat Strategy
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         )}

@@ -17,6 +17,8 @@ export interface SunoPromptRequest {
   exclusions?: string;
   useVoiceClone?: boolean;
   isInstrumental?: boolean;
+  density?: "Sparse" | "Medium" | "Lush" | "Auto";
+  useAnchorRepeat?: boolean;
 }
 
 export interface SunoPromptResult {
