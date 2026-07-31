@@ -17,7 +17,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<
     "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved" | "diagnostician"
   >("enhancer");
-  const [sunoVersion, setSunoVersion] = useState<SunoVersion>("v3.5");
+  const [sunoVersion, setSunoVersion] = useState<SunoVersion>("v5.5");
   const [currentResult, setCurrentResult] = useState<SunoPromptResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);

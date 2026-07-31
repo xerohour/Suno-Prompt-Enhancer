@@ -450,10 +450,10 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
         : "Pop style tags optimized for punchy earworm chorus.",
       "Universal prompt order applied: [Era] + [Genre] + [Subgenres] + [Vocals] + [Mood] + [Instruments] + [Production Metadata].",
       "Suno Bible Weak Tag Clarification: Expanded generic sub-genres with strong stylistic anchors to prevent generic output.",
-      "Suno Bible lyrics punctuation applied: (...) in bridge for slower pacing, (!) in chorus for emphasis, and (.) / (!) for rhythm patterns.",
-      "Temporal Optimization: Generate during off-peak hours (3:00 AM - 4:30 AM local time) for peak AI performance.",
-      "Visual Quality Rule: Listen to outputs with the best-looking thumbnails first; visual quality often correlates with audio quality."
-    ],
+      sunoVersion === "v4.5" ? "v4.5 Tip: Maximize your 8-minute generations by writing longer, more complex song structures." : "",
+      (sunoVersion === "v5" || sunoVersion === "v5.5") ? "v5.5 Tip: You can now clone your own voice or train a custom model with your personal catalog in Suno!" : "",
+      "Temporal Optimization: Generate during off-peak hours (3:00 AM - 4:30 AM local time) for peak AI performance."
+    ].filter(Boolean),
     moodAnalysis: `A ${moodStr.toLowerCase()} ${genreStr} production set in the ${era} era, featuring ${vocalTypeStr.toLowerCase()} delivery and ${instrumentsStr}.`,
     albumArtPrompt,
     createdAt: new Date().toISOString(),

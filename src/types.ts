@@ -1,4 +1,4 @@
-export type SunoVersion = "v3" | "v3.5" | "v4";
+export type SunoVersion = "v3" | "v3.5" | "v4" | "v4.5" | "v5" | "v5.5";
 
 export interface SunoPromptRequest {
   topic: string;

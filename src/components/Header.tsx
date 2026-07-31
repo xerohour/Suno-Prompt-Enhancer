@@ -80,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-2 bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-2xl border border-white/10 text-xs text-slate-300">
           <span className="text-slate-400 font-medium hidden sm:inline">Suno Target:</span>
           <div className="flex items-center gap-1">
-            {(["v3", "v3.5", "v4"] as SunoVersion[]).map((v) => (
+            {(["v3.5", "v4", "v4.5", "v5", "v5.5"] as SunoVersion[]).map((v) => (
               <button
                 key={v}
                 onClick={() => setSunoVersion(v)}
