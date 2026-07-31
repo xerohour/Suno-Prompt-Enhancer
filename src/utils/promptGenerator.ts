@@ -83,8 +83,11 @@ function generateGenreSpecificLyrics(
   genreCategory: "rock" | "hiphop" | "country" | "electronic" | "cinematic" | "default",
   topicStr: string,
   instrumentsStr: string,
-  mood: string
+  mood: string,
+  producerStr: string,
+  qualityStr: string
 ): { lyrics: string; hook: string; metatagsUsed: string[] } {
+  const metadataBlock = `${producerStr ? `[${producerStr}]\n` : ""}[${qualityStr}]\n\n`;
   let hook = "";
   let lyrics = "";
   const metatagsUsed = [
@@ -101,7 +104,7 @@ function generateGenreSpecificLyrics(
   switch (genreCategory) {
     case "rock":
       hook = "We strike like thunder! Heavy riffs tearing through!";
-      lyrics = `[Intro, ${instrumentsStr}]
+      lyrics = `${metadataBlock}[Intro, ${instrumentsStr}]
 . . . ! . .
 
 [Verse 1]
@@ -137,7 +140,7 @@ Heavy riffs fading in the thunder... fading away...
 
     case "hiphop":
       hook = "Spit that relentless flow! Heavy bars locked on beat!";
-      lyrics = `[Intro, ${instrumentsStr}]
+      lyrics = `${metadataBlock}[Intro, ${instrumentsStr}]
 . . . ! . .
 
 [Verse 1]
@@ -173,7 +176,7 @@ Rhythmic flow fading with the bass... dropping out...
 
     case "country":
       hook = "Riding down the open road under endless prairie skies!";
-      lyrics = `[Intro, ${instrumentsStr}]
+      lyrics = `${metadataBlock}[Intro, ${instrumentsStr}]
 . . . ! . .
 
 [Verse 1]
@@ -210,7 +213,7 @@ Driving down the open road... fading into the night...
     case "electronic":
       hook = "Feel the drop! Systems pulse in the electric light!";
       metatagsUsed[4] = "[Drop]";
-      lyrics = `[Intro, ${instrumentsStr}]
+      lyrics = `${metadataBlock}[Intro, ${instrumentsStr}]
 . . . ! . .
 
 [Verse 1]
@@ -246,7 +249,7 @@ Fading pulses... systems down...
 
     case "cinematic":
       hook = "Epic destiny unfolds! Standing against the storm!";
-      lyrics = `[Intro, ${instrumentsStr}]
+      lyrics = `${metadataBlock}[Intro, ${instrumentsStr}]
 . . . ! . .
 
 [Verse 1]
@@ -282,7 +285,7 @@ Symphonic swell subsides... dramatic silence...
 
     default:
       hook = `We rise above the tide for ${topicStr}!`;
-      lyrics = `[Intro, ${instrumentsStr}]
+      lyrics = `${metadataBlock}[Intro, ${instrumentsStr}]
 . . . ! . .
 
 [Verse 1]
@@ -420,7 +423,9 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     genreCategory,
     conceptStr,
     instrumentsStr,
-    moodStr
+    moodStr,
+    producerAnchorStr,
+    audioQualityStr
   );
 
   const generatedTitle = conceptStr
