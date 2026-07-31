@@ -426,7 +426,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
   const albumArtPrompt = `album art: ${conceptStr.slice(0, 60)}, ${genreStr} aesthetic, ${visualStyle}, 8k resolution, text reads "${titleForArt}" at the top`;
 
   // Dual-Naming Convention (Suno Bible)
-  const context = isPop ? "PopHit" : isCinematic ? "FilmScore" : isHiphop ? "RapTrack" : isElectronic ? "EDM" : "Song";
+  const context = isPop ? "PopHit" : genreCategory === "cinematic" ? "FilmScore" : genreCategory === "hiphop" ? "RapTrack" : genreCategory === "electronic" ? "EDM" : "Song";
   const theme = titleForArt.replace(/\s+/g, "").slice(0, 15);
   const projectTitle = `${context}_${theme}_v1`;
 
