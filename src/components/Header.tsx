@@ -1,10 +1,10 @@
 import React from "react";
 import { Sparkles, Music2, BookOpen, Layers, Bookmark, Wand2, Disc, Activity } from "lucide-react";
-import { SunoVersion } from "../types";
+import { SunoVersion, TabKey } from "../types";
 
 interface HeaderProps {
-  activeTab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician";
-  setActiveTab: (tab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician") => void;
+  activeTab: TabKey;
+  setActiveTab: (tab: TabKey) => void;
   sunoVersion: SunoVersion;
   setSunoVersion: (v: SunoVersion) => void;
   savedCount: number;

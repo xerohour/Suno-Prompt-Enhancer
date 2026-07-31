@@ -1,4 +1,5 @@
-export type SunoVersion = "v3" | "v3.5" | "v4" | "v4.5" | "v5" | "v5.5";
+export type SunoVersion = "v3.5" | "v4" | "v4.5" | "v5" | "v5.5";
+export type TabKey = "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician";
 
 export interface SunoPromptRequest {
   topic: string;
@@ -14,6 +15,7 @@ export interface SunoPromptRequest {
   producerAnchor?: string;
   audioQuality?: string;
   exclusions?: string;
+  useVoiceClone?: boolean;
 }
 
 export interface SunoPromptResult {

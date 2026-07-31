@@ -10,36 +10,20 @@ import { SavedPrompts } from "./components/SavedPrompts";
 import { ArtistReplicas } from "./components/ArtistReplicas";
 import { SunoDiagnostician } from "./components/SunoDiagnostician";
 import { BibleCheatsheet } from "./components/BibleCheatsheet";
-import { SunoPromptRequest, SunoPromptResult, SunoVersion, PresetPrompt } from "./types";
+import { SunoPromptRequest, SunoPromptResult, SunoVersion, PresetPrompt, TabKey } from "./types";
 import { generateClientSidePrompt } from "./utils/promptGenerator";
 import { Sparkles, ArrowUp } from "lucide-react";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<
-    "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician"
-  >("enhancer");
+  const [activeTab, setActiveTab] = useState<TabKey>("enhancer");
   const [sunoVersion, setSunoVersion] = useState<SunoVersion>("v5.5");
   const [currentResult, setCurrentResult] = useState<SunoPromptResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Saved Prompts from localStorage
-  const [savedList, setSavedList] = useState<SunoPromptResult[]>(() => {
-    try {
-      const stored = localStorage.getItem("hookgenius_saved_prompts");
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
-
-  useEffect(() => {
-    try {
-      localStorage.setItem("hookgenius_saved_prompts", JSON.stringify(savedList));
-    } catch (e) {
-      console.error("Failed to save prompts to localStorage:", e);
-    }
-  }, [savedList]);
+  const [savedList, setSavedList] = useLocalStorage<SunoPromptResult[]>("hookgenius_saved_prompts", []);
 
   // Handle Prompt Enhancement
   const handleEnhancePrompt = async (reqData: SunoPromptRequest) => {

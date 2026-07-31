@@ -336,6 +336,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     structurePreferences,
     customInstructions,
     exclusions,
+    useVoiceClone,
   } = req;
 
   const conceptStr = topic.trim() || "Epic journey of transformation and resilience";
@@ -395,8 +396,15 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
 
   if (sunoVersion === "v5.5") {
     // Vector/Stacked format for v5.5
+    // Voice Clone Check
+    let finalTimbreLayer = [featuredInstruments, vocalTypeStr].filter(Boolean).join(", ");
+    if (useVoiceClone) {
+       // Omit vocal timbre/gender, only keep emotion/delivery if provided (simplifying by just dropping the preset vocalType entirely to let the clone shine, or adding 'breathy/emotional' delivery)
+       finalTimbreLayer = [featuredInstruments, "emotional delivery"].filter(Boolean).join(", ");
+    }
+    
     const coreLayer = [tempoStr, "A minor", genreStr, subGenresStr].filter(Boolean).join(", ");
-    const timbreLayer = [featuredInstruments, vocalTypeStr].filter(Boolean).join(", ");
+    const timbreLayer = finalTimbreLayer;
     const atmosLayer = moodStr;
     const constraintsLayer = [audioQualityStr, producerAnchorStr, exclusionsStr ? exclusionsStr : (!isPop ? "no pop, no polished hooks" : "")].filter(Boolean).join(", ");
 
@@ -470,6 +478,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
       "Suno Bible Weak Tag Clarification: Expanded generic sub-genres with strong stylistic anchors to prevent generic output.",
       sunoVersion === "v4.5" ? "v4.5 Tip: Maximize your 8-minute generations by writing longer, more complex song structures." : "",
       (sunoVersion === "v5" || sunoVersion === "v5.5") ? "v5.5 Tip: You can now clone your own voice or train a custom model with your personal catalog in Suno!" : "",
+      useVoiceClone ? "Voice Clone Active: Vocal gender/timbre removed from prompt. Only emotional delivery modifiers retained." : "",
       "Temporal Optimization: Generate during off-peak hours (3:00 AM - 4:30 AM local time) for peak AI performance."
     ].filter(Boolean),
     moodAnalysis: `A ${moodStr.toLowerCase()} ${genreStr} production set in the ${era} era, featuring ${vocalTypeStr.toLowerCase()} delivery and ${instrumentsStr}.`,

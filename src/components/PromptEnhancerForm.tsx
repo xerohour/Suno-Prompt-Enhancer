@@ -58,6 +58,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
   const [producerAnchor, setProducerAnchor] = useState("");
   const [audioQuality, setAudioQuality] = useState("24-bit 192kHz, wide stereo panorama");
   const [exclusions, setExclusions] = useState("");
+  const [useVoiceClone, setUseVoiceClone] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const availableSubGenres = SUB_GENRES_MAP[genre] || [];
@@ -111,6 +112,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
       producerAnchor: producerAnchor.trim() || undefined,
       audioQuality,
       exclusions: exclusions.trim() || undefined,
+      useVoiceClone: sunoVersion === "v5.5" ? useVoiceClone : false,
     });
   };
 
@@ -191,6 +193,20 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
               </option>
             ))}
           </select>
+          {sunoVersion === "v5.5" && (
+            <div className="mt-2.5 flex items-center gap-2 bg-black/20 p-2 rounded-xl border border-fuchsia-500/20">
+              <input
+                type="checkbox"
+                id="voiceClone"
+                checked={useVoiceClone}
+                onChange={(e) => setUseVoiceClone(e.target.checked)}
+                className="w-3.5 h-3.5 accent-fuchsia-500 rounded"
+              />
+              <label htmlFor="voiceClone" className="text-[10px] font-bold text-fuchsia-300 cursor-pointer">
+                Use Custom Voice / Voice Clone
+              </label>
+            </div>
+          )}
         </div>
       </div>
 
