@@ -117,3 +117,10 @@ export const SUNO_BIBLE_RULES = [
   { title: "Quality Metadata", description: "Append '[24-bit 192kHz, wide stereo, pristine audio]' for cleaner generation dynamics." },
   { title: "Temporal Optimization", description: "Peak generation fidelity occurs during low server load windows (3-4 AM local time)." },
 ];
+
+export const STUDIO_ANCHORS = [
+  { name: "Abbey Road", description: "Precision, warmth, clarity, 60s/70s British rock" },
+  { name: "Sun Studio", description: "Warm tape, slapback echo, 50s blues and rockabilly" },
+  { name: "Motown Studios", description: "Tight rhythm, vintage soul, orchestral arrangements" },
+  { name: "Electric Lady", description: "70s rock, vintage warmth, creative freedom" },
+];

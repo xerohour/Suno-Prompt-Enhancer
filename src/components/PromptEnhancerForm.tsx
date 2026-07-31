@@ -21,6 +21,8 @@ import {
   MOODS,
   INSTRUMENTS,
   RANDOM_IDEAS,
+  PRODUCER_ANCHORS,
+  STUDIO_ANCHORS,
 } from "../data/genres";
 
 interface PromptEnhancerFormProps {
@@ -354,16 +356,34 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
             {/* SUNO Bible: Producer Anchors & Quality Metadata */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
-                  Producer Anchor / Era Specificity:
+                <label className="block text-xs font-bold text-slate-300 mb-1 flex items-center gap-1.5">
+                  Producer / Studio Anchor (Suno Bible Magic):
                 </label>
                 <input
                   type="text"
                   value={producerAnchor}
                   onChange={(e) => setProducerAnchor(e.target.value)}
                   placeholder="e.g. Produced by Danger Mouse, 1970s Abbey Road..."
-                  className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                  className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 mb-2"
                 />
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {[...PRODUCER_ANCHORS, ...STUDIO_ANCHORS].map((p) => (
+                    <button
+                      key={p.name}
+                      type="button"
+                      onClick={() => {
+                        const addition = p.name.includes("Studio") || p.name.includes("Abbey") || p.name.includes("Lady") 
+                          ? `Recorded at ${p.name}` 
+                          : `Produced by ${p.name}`;
+                        setProducerAnchor((prev) => prev ? `${prev}, ${addition}` : addition);
+                      }}
+                      className="px-2 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-[10px] text-slate-300 transition-all"
+                      title={p.description}
+                    >
+                      + {p.name}
+                    </button>
+                  ))}
+                </div>
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1">
