@@ -85,9 +85,38 @@ function generateGenreSpecificLyrics(
   instrumentsStr: string,
   mood: string,
   producerStr: string,
-  qualityStr: string
+  qualityStr: string,
+  isInstrumental: boolean
 ): { lyrics: string; hook: string; metatagsUsed: string[] } {
   const metadataBlock = `${producerStr ? `[${producerStr}]\n` : ""}[${qualityStr}]\n\n`;
+
+  if (isInstrumental) {
+    return {
+      hook: "Instrumental Composition",
+      metatagsUsed: ["[Exposition]", "[Build]", "[Climax]", "[Release]"],
+      lyrics: `${metadataBlock}[Exposition]
+(${mood.toLowerCase()} atmosphere, ${topicStr.toLowerCase()})
+(${instrumentsStr.toLowerCase()} slowly fading in)
+. . .
+
+[Build]
+(tempo increases, tension rising)
+(layered textures, dynamic swell)
+! . . ! . .
+
+[Climax]
+(powerful, full ensemble, dramatic peak)
+(heavy percussion, soaring melodies)
+! ! ! . ! !
+
+[Release]
+(abrupt drop, returning to original motif)
+(echoing ${instrumentsStr.toLowerCase()})
+(fade to silence)
+[End]`
+    };
+  }
+
   let hook = "";
   let lyrics = "";
   const metatagsUsed = [
@@ -337,6 +366,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     customInstructions,
     exclusions,
     useVoiceClone,
+    isInstrumental,
   } = req;
 
   const conceptStr = topic.trim() || "Epic journey of transformation and resilience";
@@ -396,10 +426,11 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
 
   if (sunoVersion === "v5.5") {
     // Vector/Stacked format for v5.5
-    // Voice Clone Check
+    // Voice Clone & Instrumental Checks
     let finalTimbreLayer = [featuredInstruments, vocalTypeStr].filter(Boolean).join(", ");
-    if (useVoiceClone) {
-       // Omit vocal timbre/gender, only keep emotion/delivery if provided (simplifying by just dropping the preset vocalType entirely to let the clone shine, or adding 'breathy/emotional' delivery)
+    if (isInstrumental) {
+       finalTimbreLayer = featuredInstruments;
+    } else if (useVoiceClone) {
        finalTimbreLayer = [featuredInstruments, "emotional delivery"].filter(Boolean).join(", ");
     }
     
@@ -422,6 +453,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
       featuredInstruments,
       audioQualityStr,
     ].filter(Boolean);
+    if (isInstrumental) expandedParts.push("Instrumental");
     stylePromptExpanded = `${expandedParts.join(", ")}${antiPopTag}`;
   }
 
@@ -433,7 +465,8 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     instrumentsStr,
     moodStr,
     producerAnchorStr,
-    audioQualityStr
+    audioQualityStr,
+    !!isInstrumental
   );
 
   const generatedTitle = conceptStr
@@ -478,7 +511,8 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
       "Suno Bible Weak Tag Clarification: Expanded generic sub-genres with strong stylistic anchors to prevent generic output.",
       sunoVersion === "v4.5" ? "v4.5 Tip: Maximize your 8-minute generations by writing longer, more complex song structures." : "",
       (sunoVersion === "v5" || sunoVersion === "v5.5") ? "v5.5 Tip: You can now clone your own voice or train a custom model with your personal catalog in Suno!" : "",
-      useVoiceClone ? "Voice Clone Active: Vocal gender/timbre removed from prompt. Only emotional delivery modifiers retained." : "",
+      useVoiceClone && !isInstrumental ? "Voice Clone Active: Vocal gender/timbre removed from prompt. Only emotional delivery modifiers retained." : "",
+      isInstrumental ? "Instrumental Mode: Lyrics act as a 'Director's Libretto' with parenthetical instructions instead of sung words." : "",
       "Temporal Optimization: Generate during off-peak hours (3:00 AM - 4:30 AM local time) for peak AI performance."
     ].filter(Boolean),
     moodAnalysis: `A ${moodStr.toLowerCase()} ${genreStr} production set in the ${era} era, featuring ${vocalTypeStr.toLowerCase()} delivery and ${instrumentsStr}.`,

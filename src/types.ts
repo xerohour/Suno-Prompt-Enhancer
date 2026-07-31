@@ -16,6 +16,7 @@ export interface SunoPromptRequest {
   audioQuality?: string;
   exclusions?: string;
   useVoiceClone?: boolean;
+  isInstrumental?: boolean;
 }
 
 export interface SunoPromptResult {

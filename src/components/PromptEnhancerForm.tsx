@@ -59,6 +59,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
   const [audioQuality, setAudioQuality] = useState("24-bit 192kHz, wide stereo panorama");
   const [exclusions, setExclusions] = useState("");
   const [useVoiceClone, setUseVoiceClone] = useState(false);
+  const [isInstrumental, setIsInstrumental] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const availableSubGenres = SUB_GENRES_MAP[genre] || [];
@@ -113,6 +114,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
       audioQuality,
       exclusions: exclusions.trim() || undefined,
       useVoiceClone: sunoVersion === "v5.5" ? useVoiceClone : false,
+      isInstrumental,
     });
   };
 
@@ -178,14 +180,24 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <Mic className="w-3.5 h-3.5 text-fuchsia-400" />
-            Vocal Profile
+          <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center justify-between">
+            <span className="flex items-center gap-1.5"><Mic className="w-3.5 h-3.5 text-fuchsia-400" /> Vocal Profile</span>
+            <div className="flex items-center gap-1.5">
+              <input
+                type="checkbox"
+                id="isInst"
+                checked={isInstrumental}
+                onChange={(e) => setIsInstrumental(e.target.checked)}
+                className="w-3 h-3 accent-cyan-500 rounded"
+              />
+              <label htmlFor="isInst" className="text-[10px] font-bold text-cyan-300 cursor-pointer">Instrumental Track</label>
+            </div>
           </label>
           <select
             value={vocalType}
             onChange={(e) => setVocalType(e.target.value)}
-            className="w-full bg-black/30 border border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
+            disabled={isInstrumental}
+            className="w-full bg-black/30 border border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {VOCAL_TYPES.map((v) => (
               <option key={v} value={v} className="bg-slate-900 text-slate-100">
@@ -193,7 +205,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
               </option>
             ))}
           </select>
-          {sunoVersion === "v5.5" && (
+          {sunoVersion === "v5.5" && !isInstrumental && (
             <div className="mt-2.5 flex items-center gap-2 bg-black/20 p-2 rounded-xl border border-fuchsia-500/20">
               <input
                 type="checkbox"
