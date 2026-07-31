@@ -413,9 +413,9 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
   // 2. Era Mapping automatically (or override if producerAnchor implies an era, but we just prepend producerAnchor)
   const era = getEraForGenre(genreStr);
 
-  // 2. Universal Prompt Formula Order:
-  // [producer anchor] + [era/decade] + [genre] + [subgenres] + [vocal description] + [moods] + [instruments] + [production metadata]
-  const shortParts = [producerAnchorStr, era, genreStr, subGenresStr, vocalTypeStr, moodStr, instrumentsStr].filter(
+  // [era/decade] + [genre] + [subgenres] + [country] + [vocal description] + [moods] + [instruments] + [producer] + [quality]
+  const countryStr = vocalTypeStr.toLowerCase().includes("british") ? "UK" : vocalTypeStr.toLowerCase().includes("american") ? "US" : "";
+  const shortParts = [era, genreStr, subGenresStr, countryStr, vocalTypeStr, moodStr, instrumentsStr, producerAnchorStr].filter(
     Boolean
   );
   const shortStyleRaw = `${shortParts.join(", ")}${antiPopTag}`;
@@ -445,15 +445,16 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
   } else {
     // Standard Formula
     const expandedParts = [
-      producerAnchorStr,
       era,
       genreStr,
       subGenresStr,
+      countryStr,
       vocalTypeStr,
       tempoStr,
       moodStr,
       density !== "Auto" ? `${density.toLowerCase()} density` : "",
       featuredInstruments,
+      producerAnchorStr,
       audioQualityStr,
     ].filter(Boolean);
     if (isInstrumental) expandedParts.push("Instrumental");
