@@ -9,13 +9,14 @@ import { PresetLibrary } from "./components/PresetLibrary";
 import { SavedPrompts } from "./components/SavedPrompts";
 import { ArtistReplicas } from "./components/ArtistReplicas";
 import { SunoDiagnostician } from "./components/SunoDiagnostician";
+import { BibleCheatsheet } from "./components/BibleCheatsheet";
 import { SunoPromptRequest, SunoPromptResult, SunoVersion, PresetPrompt } from "./types";
 import { generateClientSidePrompt } from "./utils/promptGenerator";
 import { Sparkles, ArrowUp } from "lucide-react";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<
-    "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved" | "diagnostician"
+    "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician"
   >("enhancer");
   const [sunoVersion, setSunoVersion] = useState<SunoVersion>("v5.5");
   const [currentResult, setCurrentResult] = useState<SunoPromptResult | null>(null);
@@ -198,6 +199,9 @@ export default function App() {
 
         {/* Tab 4: Suno Metatags Guide */}
         {activeTab === "metatags" && <MetatagsGuide />}
+
+        {/* Tab X: Bible Cheatsheet */}
+        {activeTab === "cheatsheet" && <BibleCheatsheet />}
 
         {/* Tab 5: Hit Presets */}
         {activeTab === "presets" && <PresetLibrary onLoadPreset={handleLoadPreset} />}

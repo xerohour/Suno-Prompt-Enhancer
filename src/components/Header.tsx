@@ -3,8 +3,8 @@ import { Sparkles, Music2, BookOpen, Layers, Bookmark, Wand2, Disc, Activity } f
 import { SunoVersion } from "../types";
 
 interface HeaderProps {
-  activeTab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved" | "diagnostician";
-  setActiveTab: (tab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved" | "diagnostician") => void;
+  activeTab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician";
+  setActiveTab: (tab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician") => void;
   sunoVersion: SunoVersion;
   setSunoVersion: (v: SunoVersion) => void;
   savedCount: number;
@@ -48,6 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
             { id: "hook", label: "Hook Lab", icon: Wand2 },
             { id: "mixer", label: "Genre Blender", icon: Disc },
             { id: "metatags", label: "Metatags Cheat Sheet", icon: BookOpen },
+            { id: "cheatsheet", label: "Bible Cheatsheet", icon: BookOpen },
             { id: "presets", label: "Hit Presets", icon: Layers },
             { id: "diagnostician", label: "Diagnostician", icon: Activity },
             { id: "saved", label: "Library", icon: Bookmark, badge: savedCount },
