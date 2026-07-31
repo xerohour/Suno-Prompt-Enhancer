@@ -1,6 +1,0 @@
-{
-  "name": "Suno Prompt Enhancer",
-  "description": "An AI-powered music prompt enhancer for Suno AI song generation, structured metatags, lyrics architecture, style tags, and acoustic customization.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
