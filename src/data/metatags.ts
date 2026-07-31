@@ -211,4 +211,18 @@ export const METATAGS_LIST: MetatagInfo[] = [
     sunoTip: "Stretch vowels to control length: Oooooohhh vs Oh. System won't vocalize without explicit instruction.",
     example: "Oooooohhh whoaaa ahhhh!\nYeah-eah-eah!",
   },
+  {
+    tag: "[Sad Trombone]",
+    category: "instrumental",
+    description: "Onomatopoeic instrument tag to dictate the exact rhythm/sound of the instrument.",
+    sunoTip: "Combine with phonetic spelling to force the instrument to play a specific riff.",
+    example: "[Sad Trombone]\nwaah-Waaah-WAAH",
+  },
+  {
+    tag: "[Chugging Guitar]",
+    category: "instrumental",
+    description: "Instructs the guitar to play a rhythmic chugging pattern, reinforced by phonetic lyrics.",
+    sunoTip: "The phonetic lyrics ensure the AI matches the rhythm you want.",
+    example: "[Chugging Guitar]\nchuka-chuka-chuka-chuka",
+  }
 ];
