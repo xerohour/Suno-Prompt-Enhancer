@@ -386,20 +386,33 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
   const stylePromptShort =
     shortStyleRaw.length > 120 ? shortStyleRaw.substring(0, 117) + "..." : shortStyleRaw;
 
-  // 3. Quality Metadata
+  // 3. Quality Metadata & v5.5 Vector Prompting
   const featuredInstruments = instrumentsStr ? `featured instruments: ${instrumentsStr}` : "";
-  const expandedParts = [
-    producerAnchorStr,
-    era,
-    genreStr,
-    subGenresStr,
-    vocalTypeStr,
-    tempoStr,
-    moodStr,
-    featuredInstruments,
-    audioQualityStr,
-  ].filter(Boolean);
-  const stylePromptExpanded = `${expandedParts.join(", ")}${antiPopTag}`;
+  let stylePromptExpanded = "";
+
+  if (sunoVersion === "v5.5") {
+    // Vector/Stacked format for v5.5
+    const coreLayer = [tempoStr, "A minor", genreStr, subGenresStr].filter(Boolean).join(", ");
+    const timbreLayer = [featuredInstruments, vocalTypeStr].filter(Boolean).join(", ");
+    const atmosLayer = moodStr;
+    const constraintsLayer = [audioQualityStr, producerAnchorStr, exclusionsStr ? exclusionsStr : (!isPop ? "no pop, no polished hooks" : "")].filter(Boolean).join(", ");
+
+    stylePromptExpanded = `[CORE]: ${coreLayer} | [TIMBRE]: ${timbreLayer} | [ATMOSPHERE]: ${atmosLayer} | [CONSTRAINTS]: ${constraintsLayer}`;
+  } else {
+    // Standard Formula
+    const expandedParts = [
+      producerAnchorStr,
+      era,
+      genreStr,
+      subGenresStr,
+      vocalTypeStr,
+      tempoStr,
+      moodStr,
+      featuredInstruments,
+      audioQualityStr,
+    ].filter(Boolean);
+    stylePromptExpanded = `${expandedParts.join(", ")}${antiPopTag}`;
+  }
 
   // 4 & 5. Smarter Genre-Specific Lyrics Generation
   const genreCategory = getGenreCategory(genreStr);

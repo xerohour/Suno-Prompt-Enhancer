@@ -44,6 +44,12 @@ const FAILURE_MODES: Diagnosis[] = [
     cause: "No Decade Specified. Era is the single most powerful signal to the AI.",
     fix: "Always include the decade at the very beginning of your prompt (e.g. '1970s', '2010s').",
     icon: RefreshCw
+  },
+  {
+    issue: "Over-Produced or Too Clean",
+    cause: "v4.5/v5.5 Cleanup. The newer models default heavily to high-fidelity, polished audio and resist lo-fi aesthetics.",
+    fix: "Use aggressive anti-clean tags (e.g., 'analog distortion, lo-fi cassette tape, bleed, noise'). If it still resists, revert to v3.5.",
+    icon: Zap
   }
 ];
 
