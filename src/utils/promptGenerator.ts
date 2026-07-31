@@ -332,6 +332,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     instrumentation,
     structurePreferences,
     customInstructions,
+    exclusions,
   } = req;
 
   const conceptStr = topic.trim() || "Epic journey of transformation and resilience";
@@ -352,7 +353,12 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     gLower.includes("dance") ||
     gLower.includes("k-pop") ||
     gLower.includes("j-pop");
-  const antiPopTag = !isPop ? ", no pop, no hooks, raw mix" : "";
+  
+  let exclusionsStr = exclusions ? exclusions.trim() : "";
+  if (!isPop && !exclusionsStr.includes("pop")) {
+    exclusionsStr += (exclusionsStr ? ", " : "") + "no pop, no polished hooks";
+  }
+  const antiPopTag = exclusionsStr ? `, ${exclusionsStr}` : "";
 
   const producerAnchorStr = req.producerAnchor || "";
   const audioQualityStr = req.audioQuality || "24-bit 192kHz, wide stereo panorama";
@@ -419,10 +425,12 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     sunoTips: [
       `Optimized for Suno ${sunoVersion || "v3.5"} character limits and structural tag execution.`,
       !isPop
-        ? "Anti-pop gravity well directive ('no pop, no hooks, raw mix') applied to enforce genre authenticity."
+        ? `Anti-pop gravity well directive ('${exclusionsStr}') applied to enforce genre authenticity.`
         : "Pop style tags optimized for punchy earworm chorus.",
       "Universal prompt order applied: [Era] + [Genre] + [Subgenres] + [Vocals] + [Mood] + [Instruments] + [Production Metadata].",
       "Suno Bible lyrics punctuation applied: (...) in bridge for slower pacing, (!) in chorus for emphasis, and (.) / (!) for rhythm patterns.",
+      "Temporal Optimization: Generate during off-peak hours (3:00 AM - 4:30 AM local time) for peak AI performance.",
+      "Visual Quality Rule: Listen to outputs with the best-looking thumbnails first; visual quality often correlates with audio quality."
     ],
     moodAnalysis: `A ${moodStr.toLowerCase()} ${genreStr} production set in the ${era} era, featuring ${vocalTypeStr.toLowerCase()} delivery and ${instrumentsStr}.`,
     createdAt: new Date().toISOString(),

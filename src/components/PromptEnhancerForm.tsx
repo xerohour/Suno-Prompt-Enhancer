@@ -55,6 +55,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
   const [customInstructions, setCustomInstructions] = useState("");
   const [producerAnchor, setProducerAnchor] = useState("");
   const [audioQuality, setAudioQuality] = useState("24-bit 192kHz, wide stereo panorama");
+  const [exclusions, setExclusions] = useState("");
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const availableSubGenres = SUB_GENRES_MAP[genre] || [];
@@ -71,6 +72,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
     setVocalType(randomVocal);
     setMood(randomMood);
     setProducerAnchor("");
+    setExclusions("");
   };
 
   const toggleSubGenre = (sg: string) => {
@@ -106,6 +108,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
       customInstructions,
       producerAnchor: producerAnchor.trim() || undefined,
       audioQuality,
+      exclusions: exclusions.trim() || undefined,
     });
   };
 
@@ -374,6 +377,23 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
                   className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
                 />
               </div>
+            </div>
+
+            {/* Anti-Gravity Exclusions */}
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1">
+                Force Exclusions (Anti-Gravity Well):
+              </label>
+              <input
+                type="text"
+                value={exclusions}
+                onChange={(e) => setExclusions(e.target.value)}
+                placeholder="e.g. no pop, no polished hooks, no trap beats"
+                className="w-full bg-black/30 border border-red-500/20 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400/50"
+              />
+              <p className="text-[10px] text-slate-400 mt-1.5 ml-1">
+                Use to avoid Suno's default tendencies. If you aren't making a pop song, explicitly exclude pop elements.
+              </p>
             </div>
           </div>
         )}

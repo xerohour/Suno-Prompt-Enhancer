@@ -13,6 +13,7 @@ export interface SunoPromptRequest {
   customInstructions?: string;
   producerAnchor?: string;
   audioQuality?: string;
+  exclusions?: string;
 }
 
 export interface SunoPromptResult {
