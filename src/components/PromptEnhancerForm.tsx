@@ -445,8 +445,29 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
                   value={audioQuality}
                   onChange={(e) => setAudioQuality(e.target.value)}
                   placeholder="e.g. Tape saturation, 24-bit 192kHz..."
-                  className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+                  className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 mb-2"
                 />
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {[
+                    "Dolby Atmos",
+                    "24-bit 192kHz",
+                    "Tape Saturation",
+                    "Wide Stereo",
+                    "Natural Room Reverb",
+                    "Lo-Fi Cassette"
+                  ].map((tag) => (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() => {
+                        setAudioQuality((prev) => prev ? `${prev}, ${tag}` : tag);
+                      }}
+                      className="px-2 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-[10px] text-slate-300 transition-all"
+                    >
+                      + {tag}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 

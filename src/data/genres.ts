@@ -70,6 +70,12 @@ export const MOODS = [
   "Mysterious & Suspenseful",
   "Funky & Playful",
   "Epic & Heroic",
+  "Romantic & Heartfelt",
+  "Introspective & Reflective",
+  "Explosive & Dynamic",
+  "Dreamlike & Mystical",
+  "Cinematic & Brooding",
+  "Experimental & Raw"
 ];
 
 export const INSTRUMENTS = [
@@ -77,14 +83,26 @@ export const INSTRUMENTS = [
   "Acoustic Guitar",
   "Analog Synthesizer",
   "Rhodes Piano",
+  "Grand Piano",
   "Heavy 808 Bass",
+  "Bass Guitar",
   "Taiko / Cinematic Drums",
+  "Drum Machine",
   "Saxophone",
   "Violin / Orchestral Strings",
+  "Cello",
   "Slap Bass",
   "Brass Section",
+  "Trumpet",
+  "Flute",
+  "Clarinet",
+  "Harp",
+  "Percussion",
   "Phonk Cowbell",
   "Lo-Fi Vinyl Crackle",
+  "Synth Pads",
+  "Layered Effects",
+  "Tape Loops"
 ];
 
 export const RANDOM_IDEAS = [
