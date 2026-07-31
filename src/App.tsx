@@ -8,13 +8,14 @@ import { MetatagsGuide } from "./components/MetatagsGuide";
 import { PresetLibrary } from "./components/PresetLibrary";
 import { SavedPrompts } from "./components/SavedPrompts";
 import { ArtistReplicas } from "./components/ArtistReplicas";
+import { SunoDiagnostician } from "./components/SunoDiagnostician";
 import { SunoPromptRequest, SunoPromptResult, SunoVersion, PresetPrompt } from "./types";
 import { generateClientSidePrompt } from "./utils/promptGenerator";
 import { Sparkles, ArrowUp } from "lucide-react";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<
-    "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved"
+    "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved" | "diagnostician"
   >("enhancer");
   const [sunoVersion, setSunoVersion] = useState<SunoVersion>("v3.5");
   const [currentResult, setCurrentResult] = useState<SunoPromptResult | null>(null);
@@ -201,7 +202,10 @@ export default function App() {
         {/* Tab 5: Hit Presets */}
         {activeTab === "presets" && <PresetLibrary onLoadPreset={handleLoadPreset} />}
 
-        {/* Tab 6: Saved Library */}
+        {/* Tab 6: Diagnostician */}
+        {activeTab === "diagnostician" && <SunoDiagnostician />}
+
+        {/* Tab 7: Saved Library */}
         {activeTab === "saved" && (
           <SavedPrompts
             savedList={savedList}

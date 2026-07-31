@@ -1,10 +1,10 @@
 import React from "react";
-import { Sparkles, Music2, BookOpen, Layers, Bookmark, Wand2, Disc } from "lucide-react";
+import { Sparkles, Music2, BookOpen, Layers, Bookmark, Wand2, Disc, Activity } from "lucide-react";
 import { SunoVersion } from "../types";
 
 interface HeaderProps {
-  activeTab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved";
-  setActiveTab: (tab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved") => void;
+  activeTab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved" | "diagnostician";
+  setActiveTab: (tab: "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "presets" | "saved" | "diagnostician") => void;
   sunoVersion: SunoVersion;
   setSunoVersion: (v: SunoVersion) => void;
   savedCount: number;
@@ -49,6 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
             { id: "mixer", label: "Genre Blender", icon: Disc },
             { id: "metatags", label: "Metatags Cheat Sheet", icon: BookOpen },
             { id: "presets", label: "Hit Presets", icon: Layers },
+            { id: "diagnostician", label: "Diagnostician", icon: Activity },
             { id: "saved", label: "Library", icon: Bookmark, badge: savedCount },
           ].map((tab) => {
             const Icon = tab.icon;
