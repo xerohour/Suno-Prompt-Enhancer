@@ -62,6 +62,24 @@ const FAILURE_MODES: Diagnosis[] = [
     cause: "The Paradox of Specificity. If you get too specific (e.g. 'vintage 1972 Marshall amp gain at 7.5'), Suno gets confused and defaults to generic.",
     fix: "Stay at the genre, style, and instrumentation level. Don't use highly technical audio equipment specs.",
     icon: Activity
+  },
+  {
+    issue: "Muddy or Crowded Mix",
+    cause: "Frequency clashing. Too many instruments playing in the same frequency range (often midrange).",
+    fix: "Declare density as 'sparse'. Remove a midrange instrument (like a secondary synth pad) and explicitly separate registers (low sub bass, mid-range pads, high glassy lead).",
+    icon: AlertCircle
+  },
+  {
+    issue: "Weak Chorus / No Lift",
+    cause: "Lack of contrast. The verse and chorus have the same energy level.",
+    fix: "Add a '[Build]' or '[Crescendo]' tag in the '[Pre-Chorus]'. Simplify the verse arrangement so the chorus feels bigger by contrast.",
+    icon: Activity
+  },
+  {
+    issue: "Structure Tags Ignored",
+    cause: "Poor formatting. Suno's parser didn't recognize your section changes.",
+    fix: "Ensure there is a completely blank line between every section (e.g. after a Verse and before a Chorus). Only use standard tags like [Verse], [Chorus], [Bridge].",
+    icon: Search
   }
 ];
 

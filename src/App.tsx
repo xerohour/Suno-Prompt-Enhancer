@@ -12,6 +12,7 @@ import { SunoDiagnostician } from "./components/SunoDiagnostician";
 import { BibleCheatsheet } from "./components/BibleCheatsheet";
 import { StyleIndex } from "./components/StyleIndex";
 import { ModelComparison } from "./components/ModelComparison";
+import { SongwritingGuide } from "./components/SongwritingGuide";
 import { SunoPromptRequest, SunoPromptResult, SunoVersion, PresetPrompt, TabKey } from "./types";
 import { generateClientSidePrompt } from "./utils/promptGenerator";
 import { Sparkles, ArrowUp } from "lucide-react";
@@ -185,6 +186,7 @@ export default function App() {
 
         {/* Tab 4: Suno Metatags Guide */}
         {activeTab === "metatags" && <MetatagsGuide />}
+        {activeTab === "songwriting" && <SongwritingGuide />}
         {activeTab === "styles" && <StyleIndex />}
         {activeTab === "models" && <ModelComparison />}
 
