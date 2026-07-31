@@ -1,5 +1,5 @@
 import React from "react";
-import { Sparkles, Music2, BookOpen, Layers, Bookmark, Wand2, Disc, Activity } from "lucide-react";
+import { Sparkles, Music2, BookOpen, Layers, Bookmark, Wand2, Disc, Activity, Hash } from "lucide-react";
 import { SunoVersion, TabKey } from "../types";
 
 interface HeaderProps {
@@ -48,6 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
             { id: "hook", label: "Hook Lab", icon: Wand2 },
             { id: "mixer", label: "Genre Blender", icon: Disc },
             { id: "metatags", label: "Metatags Cheat Sheet", icon: BookOpen },
+            { id: "styles", label: "Style Index", icon: Hash },
             { id: "cheatsheet", label: "Bible Cheatsheet", icon: BookOpen },
             { id: "presets", label: "Hit Presets", icon: Layers },
             { id: "diagnostician", label: "Diagnostician", icon: Activity },
