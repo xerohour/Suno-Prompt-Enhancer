@@ -527,6 +527,47 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
         )}
       </div>
 
+      {/* Pre-Flight Checklist */}
+      <div className="bg-black/20 border border-white/10 rounded-2xl p-5 space-y-3 relative z-10">
+        <h4 className="text-xs font-bold text-slate-300 uppercase tracking-widest flex items-center gap-1.5">
+          <CheckSquare className="w-4 h-4 text-emerald-400" /> Pre-Generation Checklist (Suno Bible)
+        </h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-[11px] text-slate-300">
+          <label className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors">
+            <input type="checkbox" className="w-3.5 h-3.5 accent-emerald-500 rounded" />
+            Era specified? (e.g. 1970s, 2010s)
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors">
+            <input type="checkbox" className="w-3.5 h-3.5 accent-emerald-500 rounded" />
+            Primary genre clear?
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors">
+            <input type="checkbox" className="w-3.5 h-3.5 accent-emerald-500 rounded" />
+            Vocalist type specified?
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors">
+            <input type="checkbox" className="w-3.5 h-3.5 accent-emerald-500 rounded" />
+            5-7 style descriptors used?
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors">
+            <input type="checkbox" className="w-3.5 h-3.5 accent-emerald-500 rounded" />
+            Specific instruments listed?
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors">
+            <input type="checkbox" className="w-3.5 h-3.5 accent-emerald-500 rounded" />
+            Pop gravity countered? (No Pop tags)
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors">
+            <input type="checkbox" className="w-3.5 h-3.5 accent-emerald-500 rounded" />
+            Production metadata in lyrics?
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-white transition-colors">
+            <input type="checkbox" className="w-3.5 h-3.5 accent-emerald-500 rounded" />
+            Are you generating variations? (3-5 min)
+          </label>
+        </div>
+      </div>
+
       {/* 4. Pro Suno Tips */}
       {result.sunoTips && result.sunoTips.length > 0 && (
         <div className="bg-black/20 border border-white/10 rounded-2xl p-5 space-y-2.5 relative z-10">
