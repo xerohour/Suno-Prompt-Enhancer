@@ -30,6 +30,7 @@ export interface SunoPromptResult {
   metatagsUsed: string[];
   sunoTips: string[];
   moodAnalysis?: string;
+  albumArtPrompt?: string;
   createdAt?: string;
 }
 

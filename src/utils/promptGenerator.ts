@@ -410,6 +410,10 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
       ? structurePreferences
       : lyricsMetatags;
 
+  const titleForArt = generatedTitle.toUpperCase().replace(/[^A-Z0-9 ]/g, "");
+  const visualStyle = isPop ? "vivid colors, glossy pop art, vibrant, modern" : "moody lighting, cinematic atmosphere, highly detailed, expressive";
+  const albumArtPrompt = `album art: ${conceptStr.slice(0, 60)}, ${genreStr} aesthetic, ${visualStyle}, 8k resolution, text reads "${titleForArt}" at the top`;
+
   return {
     id: `suno-${Date.now()}`,
     title: generatedTitle || "Suno Anthem",
@@ -433,6 +437,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
       "Visual Quality Rule: Listen to outputs with the best-looking thumbnails first; visual quality often correlates with audio quality."
     ],
     moodAnalysis: `A ${moodStr.toLowerCase()} ${genreStr} production set in the ${era} era, featuring ${vocalTypeStr.toLowerCase()} delivery and ${instrumentsStr}.`,
+    albumArtPrompt,
     createdAt: new Date().toISOString(),
   };
 }

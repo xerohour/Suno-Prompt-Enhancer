@@ -36,6 +36,7 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
   const [copiedLyrics, setCopiedLyrics] = useState(false);
   const [copiedAll, setCopiedAll] = useState(false);
   const [copiedHook, setCopiedHook] = useState(false);
+  const [copiedArt, setCopiedArt] = useState(false);
 
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
@@ -61,7 +62,7 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
     const element = document.createElement("a");
     const file = new Blob(
       [
-        `TITLE: ${result.title}\nBPM: ${result.bpm}\nKEY: ${result.musicalKey}\nVOCAL: ${result.vocalDescription}\n\n=== STYLE PROMPT (SHORT) ===\n${result.stylePromptShort}\n\n=== STYLE PROMPT (EXPANDED) ===\n${result.stylePromptExpanded}\n\n=== CATCHY HOOK ===\n${result.hook}\n\n=== LYRICS ===\n${lyricsText}\n\n=== SUNO PRO TIPS ===\n${result.sunoTips.join("\n")}`,
+        `TITLE: ${result.title}\nBPM: ${result.bpm}\nKEY: ${result.musicalKey}\nVOCAL: ${result.vocalDescription}\n\n=== STYLE PROMPT (SHORT) ===\n${result.stylePromptShort}\n\n=== STYLE PROMPT (EXPANDED) ===\n${result.stylePromptExpanded}\n\n=== ALBUM ART PROMPT ===\n${result.albumArtPrompt || "N/A"}\n\n=== CATCHY HOOK ===\n${result.hook}\n\n=== LYRICS ===\n${lyricsText}\n\n=== SUNO PRO TIPS ===\n${result.sunoTips.join("\n")}`,
       ],
       { type: "text/plain" }
     );
@@ -338,6 +339,29 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
 
         {audioError && <p className="text-xs text-amber-400">{audioError}</p>}
       </div>
+
+      {/* 2.5. Album Art Prompt Box (Optional) */}
+      {result.albumArtPrompt && (
+        <div className="bg-black/20 rounded-2xl p-4 border border-white/10 relative space-y-2 z-10">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-emerald-400" />
+              <h3 className="text-xs font-bold uppercase tracking-widest text-emerald-300">
+                Suno Bible Album Art Prompt
+              </h3>
+            </div>
+            <button
+              onClick={() => handleCopy(result.albumArtPrompt!, setCopiedArt)}
+              className="p-1.5 bg-white/5 hover:bg-white/10 rounded-lg text-slate-300 transition-all border border-white/5"
+            >
+              {copiedArt ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+          <p className="text-slate-300 leading-relaxed italic bg-black/40 border border-white/5 rounded-xl p-3 font-mono text-xs select-all">
+            {result.albumArtPrompt}
+          </p>
+        </div>
+      )}
 
       {/* 3. Lyrics Box & Metatags Editor */}
       <div className="bg-black/20 border border-white/10 rounded-2xl p-5 space-y-4 relative z-10">
