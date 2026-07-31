@@ -433,7 +433,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
     if (isInstrumental) {
        finalTimbreLayer = featuredInstruments;
     } else if (useVoiceClone) {
-       finalTimbreLayer = [featuredInstruments, "emotional delivery"].filter(Boolean).join(", ");
+       finalTimbreLayer = [featuredInstruments, vocalTypeStr ? vocalTypeStr : "emotional delivery"].filter(Boolean).join(", ");
     }
     
     const coreLayer = [tempoStr, "A minor", genreStr, subGenresStr].filter(Boolean).join(", ");

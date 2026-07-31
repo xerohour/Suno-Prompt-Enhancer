@@ -200,18 +200,28 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
               <label htmlFor="isInst" className="text-[10px] font-bold text-cyan-300 cursor-pointer">Instrumental Track</label>
             </div>
           </label>
-          <select
-            value={vocalType}
-            onChange={(e) => setVocalType(e.target.value)}
-            disabled={isInstrumental}
-            className="w-full bg-black/30 border border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {VOCAL_TYPES.map((v) => (
-              <option key={v} value={v} className="bg-slate-900 text-slate-100">
-                {v}
-              </option>
-            ))}
-          </select>
+          {useVoiceClone ? (
+            <input
+              type="text"
+              value={vocalType}
+              onChange={(e) => setVocalType(e.target.value)}
+              placeholder="Delivery cues (e.g. breathy, belted, frantic...)"
+              className="w-full bg-black/30 border border-fuchsia-500/50 rounded-2xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-fuchsia-400 placeholder-slate-500"
+            />
+          ) : (
+            <select
+              value={vocalType}
+              onChange={(e) => setVocalType(e.target.value)}
+              disabled={isInstrumental}
+              className="w-full bg-black/30 border border-white/10 rounded-2xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {VOCAL_TYPES.map((v) => (
+                <option key={v} value={v} className="bg-slate-900 text-slate-100">
+                  {v}
+                </option>
+              ))}
+            </select>
+          )}
           {sunoVersion === "v5.5" && !isInstrumental && (
             <div className="mt-2.5 flex items-center gap-2 bg-black/20 p-2 rounded-xl border border-fuchsia-500/20">
               <input

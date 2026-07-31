@@ -1,5 +1,5 @@
 export type SunoVersion = "v3.5" | "v4" | "v4.5" | "v5" | "v5.5";
-export type TabKey = "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician" | "styles";
+export type TabKey = "enhancer" | "artists" | "hook" | "mixer" | "metatags" | "cheatsheet" | "presets" | "saved" | "diagnostician" | "styles" | "models";
 
 export interface SunoPromptRequest {
   topic: string;
