@@ -50,6 +50,18 @@ const FAILURE_MODES: Diagnosis[] = [
     cause: "v4.5/v5.5 Cleanup. The newer models default heavily to high-fidelity, polished audio and resist lo-fi aesthetics.",
     fix: "Use aggressive anti-clean tags (e.g., 'analog distortion, lo-fi cassette tape, bleed, noise'). If it still resists, revert to v3.5.",
     icon: Zap
+  },
+  {
+    issue: "Contradictory Tags Causing Confusion",
+    cause: "Tags are pulling in opposite directions. For example, using 'lo-fi' and 'high-fidelity' in the same prompt.",
+    fix: "Remove contradictions and limit yourself to 5-7 tags (the Goldilocks zone). Only use contrast stacking intentionally.",
+    icon: AlertCircle
+  },
+  {
+    issue: "Generic Output Regardless of Prompt",
+    cause: "The Paradox of Specificity. If you get too specific (e.g. 'vintage 1972 Marshall amp gain at 7.5'), Suno gets confused and defaults to generic.",
+    fix: "Stay at the genre, style, and instrumentation level. Don't use highly technical audio equipment specs.",
+    icon: Activity
   }
 ];
 

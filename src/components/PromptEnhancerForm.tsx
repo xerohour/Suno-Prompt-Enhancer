@@ -11,6 +11,8 @@ import {
   Sliders,
   Layers,
   HelpCircle,
+  Wand2,
+  AlertCircle,
 } from "lucide-react";
 import { SunoPromptRequest, SunoVersion } from "../types";
 import {
@@ -123,8 +125,9 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6">
-      {/* Header Banner */}
+    <div className="space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6">
+        {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
         <div>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -529,5 +532,7 @@ export const PromptEnhancerForm: React.FC<PromptEnhancerFormProps> = ({
         </p>
       </div>
     </form>
-  );
+    <TemporalOptimizer />
+  </div>
+);
 };

@@ -126,6 +126,7 @@ export const PRODUCER_ANCHORS = [
   { name: "Phil Spector", description: "Wall of sound, mono echo, lush reverb density" },
   { name: "Timbaland", description: "Syncopated beat chops, unusual vocal sampling, deep low-end" },
   { name: "Jack Antonoff", description: "Modern Indie synth-pop, vintage warm analog synths" },
+  { name: "Danger Mouse", description: "Tight control, experimental, eclectic beat-driven soundscapes" },
 ];
 
 export const SUNO_BIBLE_RULES = [
