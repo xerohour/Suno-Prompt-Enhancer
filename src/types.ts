@@ -17,8 +17,9 @@ export interface SunoPromptRequest {
 }
 
 export interface SunoPromptResult {
-  id?: string;
+  id: string;
   title: string;
+  projectTitle?: string;
   stylePromptShort: string;
   stylePromptExpanded: string;
   genreTags: string[];

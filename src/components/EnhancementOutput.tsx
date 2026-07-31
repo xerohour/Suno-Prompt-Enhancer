@@ -158,6 +158,16 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
     setLyricsText((prev) => `${prev}\n\n${tag}\n`);
   };
 
+  const handleCompileBlueprint = () => {
+    const lines = lyricsText.split("\n");
+    const compiled = lines
+      .filter((line) => !line.trim().startsWith("//") && !line.trim().startsWith("#"))
+      .join("\n")
+      .replace(/\n{3,}/g, "\n\n") // clean up excessive blank lines
+      .trim();
+    setLyricsText(compiled);
+  };
+
   const shortLength = result.stylePromptShort.length;
   const isShortOptimal = shortLength <= 120;
 
@@ -180,6 +190,11 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
             <Music2 className="w-6 h-6 text-cyan-400" />
             {result.title}
           </h2>
+          {result.projectTitle && (
+            <p className="text-[10px] text-slate-400 font-mono mt-1">
+              Project ID: <span className="text-slate-300 bg-black/40 px-1.5 py-0.5 rounded">{result.projectTitle}</span>
+            </p>
+          )}
         </div>
 
         {/* Global Actions */}
@@ -375,6 +390,15 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
 
           <div className="flex items-center gap-2">
             <button
+              onClick={handleCompileBlueprint}
+              className="flex items-center gap-1 text-[10px] text-amber-300 hover:text-amber-200 font-bold px-2.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 mr-1"
+              title="Strip all // comments from the lyrics to create a clean production prompt"
+            >
+              <Sparkles className="w-3 h-3" />
+              Compile Blueprint
+            </button>
+
+            <button
               onClick={() => setIsEditingLyrics(!isEditingLyrics)}
               className="flex items-center gap-1 text-xs text-slate-300 hover:text-white font-semibold px-3 py-1.5 rounded-xl bg-white/10 border border-white/10"
             >
@@ -446,6 +470,24 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
                   else handleInsertMetatag(tag);
                 }}
                 className="px-2.5 py-1 rounded-xl bg-fuchsia-500/10 border border-fuchsia-500/20 text-fuchsia-300 font-mono text-[11px] hover:bg-fuchsia-500/20 whitespace-nowrap font-semibold"
+              >
+                + {tag}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+            <span className="text-slate-400 font-bold text-[11px] whitespace-nowrap uppercase tracking-wider">Timing & Flow:</span>
+            {[
+              "[Legato]",
+              "[Staccato]",
+              "[On-beat]",
+              "[Laid-back]"
+            ].map((tag) => (
+              <button
+                key={tag}
+                onClick={() => handleInsertMetatag(tag)}
+                className="px-2.5 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 font-mono text-[11px] hover:bg-amber-500/20 whitespace-nowrap font-semibold"
               >
                 + {tag}
               </button>

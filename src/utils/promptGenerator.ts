@@ -425,9 +425,15 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
   const visualStyle = isPop ? "vivid colors, glossy pop art, vibrant, modern" : "moody lighting, cinematic atmosphere, highly detailed, expressive";
   const albumArtPrompt = `album art: ${conceptStr.slice(0, 60)}, ${genreStr} aesthetic, ${visualStyle}, 8k resolution, text reads "${titleForArt}" at the top`;
 
+  // Dual-Naming Convention (Suno Bible)
+  const context = isPop ? "PopHit" : isCinematic ? "FilmScore" : isHiphop ? "RapTrack" : isElectronic ? "EDM" : "Song";
+  const theme = titleForArt.replace(/\s+/g, "").slice(0, 15);
+  const projectTitle = `${context}_${theme}_v1`;
+
   return {
     id: `suno-${Date.now()}`,
     title: generatedTitle || "Suno Anthem",
+    projectTitle,
     stylePromptShort,
     stylePromptExpanded,
     genreTags: [genreStr, ...(subGenres || []), moodStr],
