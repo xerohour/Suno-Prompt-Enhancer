@@ -401,13 +401,16 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
               "[Verse 1]",
               "[Pre-Chorus]",
               "[Chorus]",
+              "[Post-Chorus]",
               "[Bridge]",
               "[Interlude]",
-              "[Break]",
-              "[Build]",
-              "[Solo]",
+              "[Beat Drop]",
+              "[Breakdown]",
+              "[Build-Up]",
+              "[Drum Fill]",
+              "[Guitar Solo]",
               "[Outro]",
-              "[Fade to End]",
+              "[Fade Out]",
               "[End]"
             ].map((tag) => (
               <button
@@ -426,6 +429,8 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
               "[Spoken Word Narration]",
               "[Ethereal Female Whisper]",
               "[Ensemble Chorus]",
+              "(Echo)",
+              "*Whispers*",
               ". . . ! . . (Rhythm Map)",
               "... (Slow Pace)",
               "(Call & Response)"
@@ -434,6 +439,8 @@ export const EnhancementOutput: React.FC<EnhancementOutputProps> = ({
                 key={tag}
                 onClick={() => {
                   if (tag === "(Call & Response)") handleInsertMetatag("(Yeah!)");
+                  else if (tag === "(Echo)") handleInsertMetatag("(Echo)");
+                  else if (tag === "*Whispers*") handleInsertMetatag("*Whispers*");
                   else if (tag === "... (Slow Pace)") handleInsertMetatag("...");
                   else if (tag === ". . . ! . . (Rhythm Map)") handleInsertMetatag(". . . ! . .");
                   else handleInsertMetatag(tag);
