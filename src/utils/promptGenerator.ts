@@ -337,7 +337,18 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
 
   const conceptStr = topic.trim() || "Epic journey of transformation and resilience";
   const genreStr = genre.trim() || "Rock";
-  const subGenresStr = subGenres && subGenres.length > 0 ? subGenres.join(", ") : "";
+
+  // Clarify Weak Tags Rule (Suno Bible)
+  const expandedSubGenres = (subGenres || []).map((sg) => {
+    const s = sg.toLowerCase();
+    if (s === "grunge") return "90s grunge rock, alternative rock, heavy metal";
+    if (s === "swing") return "1940s swing, big band jazz, uptempo, energetic";
+    if (s === "synthwave") return "80s synthwave, retrowave, analog synthesizers";
+    if (s === "lo-fi beats" || s === "lofi") return "lo-fi hip hop, vinyl crackle, chillhop, mellow beats";
+    return sg;
+  });
+
+  const subGenresStr = expandedSubGenres.length > 0 ? expandedSubGenres.join(", ") : "";
   const vocalTypeStr = vocalType || "Powerful Vocals";
   const tempoStr = tempo || "120 BPM";
   const moodStr = mood || "Energetic";
@@ -432,6 +443,7 @@ export function generateClientSidePrompt(req: SunoPromptRequest): SunoPromptResu
         ? `Anti-pop gravity well directive ('${exclusionsStr}') applied to enforce genre authenticity.`
         : "Pop style tags optimized for punchy earworm chorus.",
       "Universal prompt order applied: [Era] + [Genre] + [Subgenres] + [Vocals] + [Mood] + [Instruments] + [Production Metadata].",
+      "Suno Bible Weak Tag Clarification: Expanded generic sub-genres with strong stylistic anchors to prevent generic output.",
       "Suno Bible lyrics punctuation applied: (...) in bridge for slower pacing, (!) in chorus for emphasis, and (.) / (!) for rhythm patterns.",
       "Temporal Optimization: Generate during off-peak hours (3:00 AM - 4:30 AM local time) for peak AI performance.",
       "Visual Quality Rule: Listen to outputs with the best-looking thumbnails first; visual quality often correlates with audio quality."
